@@ -120,6 +120,15 @@ function Sidebar({ location, structure }) {
         />
 
         <SidebarLink
+          label='Books'
+          link='/admin/books'
+          location={location}
+          isSidebarOpened={isSidebarOpenedWrapper}
+          icon={<CoreIcon />}
+          toggleDrawer={toggleDrawer(true)}
+        />
+
+        <SidebarLink
           label='Documentation'
           link='/documentation'
           location={location}

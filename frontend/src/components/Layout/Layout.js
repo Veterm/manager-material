@@ -31,6 +31,9 @@ import { useLayoutState } from '../../context/LayoutContext';
 import UsersFormPage from 'pages/CRUD/Users/form/UsersFormPage';
 import UsersTablePage from 'pages/CRUD/Users/table/UsersTablePage';
 
+import BooksFormPage from 'pages/CRUD/Books/form/BooksFormPage';
+import BooksTablePage from 'pages/CRUD/Books/table/BooksTablePage';
+
 const Redirect = (props) => {
   useEffect(() => window.location.replace(props.url));
   return <span>Redirecting...</span>;
@@ -84,6 +87,14 @@ function Layout(props) {
             path={'/admin/users/:id/edit'}
             exact
             component={UsersFormPage}
+          />
+
+          <Route path={'/admin/books'} exact component={BooksTablePage} />
+          <Route path={'/admin/books/new'} exact component={BooksFormPage} />
+          <Route
+            path={'/admin/books/:id/edit'}
+            exact
+            component={BooksFormPage}
           />
         </Switch>
         <Fab

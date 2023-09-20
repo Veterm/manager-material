@@ -190,6 +190,10 @@ module.exports = class UsersDBApi {
 
     const output = users.get({ plain: true });
 
+    output.books_author = await users.getBooks_author({
+      transaction,
+    });
+
     output.avatar = await users.getAvatar({
       transaction,
     });

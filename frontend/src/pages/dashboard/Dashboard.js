@@ -18,14 +18,16 @@ const Dashboard = () => {
   const managementValue = useManagementState();
 
   const [users, setUsers] = useState(0);
+  const [books, setBooks] = useState(0);
 
   const [currentUser, setCurrentUser] = useState(null);
 
   async function loadData() {
-    const fns = [setUsers];
+    const fns = [setUsers, setBooks];
 
     const responseUsers = await axios.get(`/users/count`);
-    Promise.all([responseUsers])
+    const responseBooks = await axios.get(`/books/count`);
+    Promise.all([responseUsers, responseBooks])
       .then((res) => res.map((el) => el.data))
       .then((data) => data.forEach((el, i) => fns[i](el.count)));
   }
@@ -70,6 +72,25 @@ const Dashboard = () => {
                 <p className={classes.widgetText}>
                   Users:{' '}
                   <span className={classes.widgetTextCount}>{users}</span>
+                </p>
+              </div>
+            </Widget>
+          </Link>
+        </Grid>
+
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
+          <Link to={'/admin/books'} style={{ textDecoration: 'none' }}>
+            <Widget title={'Books'}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <InfoIcon color='primary' sx={{ mr: 1 }} />
+                <p className={classes.widgetText}>
+                  Books:{' '}
+                  <span className={classes.widgetTextCount}>{books}</span>
                 </p>
               </div>
             </Widget>
