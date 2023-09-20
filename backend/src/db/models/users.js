@@ -90,6 +90,14 @@ module.exports = function (sequelize, DataTypes) {
   users.associate = (db) => {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
+    db.users.hasMany(db.books, {
+      as: 'books_author',
+      foreignKey: {
+        name: 'authorId',
+      },
+      constraints: false,
+    });
+
     //end loop
 
     db.users.hasMany(db.file, {

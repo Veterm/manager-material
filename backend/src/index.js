@@ -16,6 +16,8 @@ const fileRoutes = require('./routes/file');
 
 const usersRoutes = require('./routes/users');
 
+const booksRoutes = require('./routes/books');
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -77,6 +79,12 @@ app.use(
   '/api/users',
   passport.authenticate('jwt', { session: false }),
   usersRoutes,
+);
+
+app.use(
+  '/api/books',
+  passport.authenticate('jwt', { session: false }),
+  booksRoutes,
 );
 
 const publicDir = path.join(__dirname, '../public');
