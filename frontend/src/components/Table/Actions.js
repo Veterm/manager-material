@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Actions = ({ classes, id, openModal, entity }) => {
   const history = useHistory();
@@ -34,6 +35,16 @@ const Actions = ({ classes, id, openModal, entity }) => {
         onClose={handleClose}
         classes={classes}
       >
+        <MenuItem
+          classes={classes}
+          onClick={() => {
+            history.push(`/admin/${entity}/${id}/show`);
+            handleClose();
+          }}
+        >
+          <VisibilityIcon />
+          Show
+        </MenuItem>
         <MenuItem
           classes={classes}
           onClick={() => {

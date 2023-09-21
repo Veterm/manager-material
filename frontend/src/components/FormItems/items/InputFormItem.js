@@ -20,6 +20,7 @@ const InputFormItem = (props) => {
     multiline,
     wysiwyg,
     required = false,
+    isShow,
   } = props;
 
   const { label } = schema[name];
@@ -32,7 +33,7 @@ const InputFormItem = (props) => {
             <>
               <TextField
                 id='outlined-basic'
-                variant='outlined'
+                variant={isShow ? 'standard' : 'outlined'}
                 fullWidth
                 label={label}
                 multiline={multiline}
@@ -50,6 +51,10 @@ const InputFormItem = (props) => {
                 placeholder={placeholder || undefined}
                 autoFocus={autoFocus || undefined}
                 autoComplete={autoComplete || undefined}
+                InputProps={{
+                  readOnly: isShow,
+                  disableUnderline: true,
+                }}
                 error={FormErrors.validateStatus(form, name, errorMessage)}
                 {...inputProps}
               />

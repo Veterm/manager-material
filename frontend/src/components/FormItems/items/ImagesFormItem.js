@@ -14,6 +14,7 @@ const ImagesFormItem = (props) => {
     fileProps,
     max = undefined,
     inputProps,
+    isShow,
     required = false,
   } = props;
 
@@ -34,6 +35,7 @@ const ImagesFormItem = (props) => {
               form.setFieldTouched(name);
             }}
             max={max}
+            isShow={isShow}
             {...inputProps}
           />
 
