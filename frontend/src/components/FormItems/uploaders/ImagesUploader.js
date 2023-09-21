@@ -59,8 +59,7 @@ const useStyles = makeStyles({
 
 const ImagesUploader = (props) => {
   const classes = useStyles();
-  const { value, onChange, schema, path, max, readonly, name } = props;
-
+  const { value, onChange, schema, path, max, readonly, name, isShow } = props;
   const [loading, setLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [imageMeta, setImageMeta] = useState({
@@ -138,22 +137,22 @@ const ImagesUploader = (props) => {
         <input
           id={'button-file-' + name}
           style={{ display: 'none' }}
-          disabled={loading || readonly}
+          disabled={loading || (isShow ? isShow : readonly)}
           accept='image/*'
           type='file'
           onChange={handleChange}
           ref={inputElement}
         />
-        <Button variant='contained' component='span'>
+        {<Button variant='contained' component='span'>
           Upload an Image
-        </Button>{' '}
+        </Button>}{' '}
       </label>
     </Box>
   );
 
   return (
     <Box>
-      {readonly || (max && fileList().length >= max) ? null : uploadButton}
+      {(isShow ? isShow : readonly) || (max && fileList().length >= max) ? null : uploadButton}
 
       {valuesArr() && valuesArr().length ? (
         <Grid container>
@@ -180,7 +179,7 @@ const ImagesUploader = (props) => {
                     >
                       <SearchIcon />
                     </Button>
-                    {!readonly && (
+                    {!(isShow ? isShow : readonly) && (
                       <Button
                         classes={{ root: classes.button }}
                         variant='text'
@@ -195,7 +194,7 @@ const ImagesUploader = (props) => {
             );
           })}
         </Grid>
-      ) : null}
+      ) : (isShow ? 'No Avatar' : null)}
       <Dialog
         open={showPreview}
         onClose={doCloseImageModal}
