@@ -31,6 +31,7 @@ const UsersForm = (props) => {
   const {
     isEditing,
     isProfile,
+    isShow,
     findLoading,
     saveLoading,
     record,
@@ -55,6 +56,8 @@ const UsersForm = (props) => {
   const title = () => {
     if (isProfile) {
       return 'Edit My Profile';
+    } else if (isShow) {
+      return 'View user';
     }
 
     return isEditing ? 'Edit Users' : 'Add Users';
@@ -74,29 +77,30 @@ const UsersForm = (props) => {
                 <InputFormItem
                   name={'firstName'}
                   schema={usersFields}
-                  autoFocus
+                  autoFocus={!isShow}
+                  isShow={isShow}
                 />
               </Grid>
 
               <Grid item>
-                <InputFormItem name={'lastName'} schema={usersFields} />
+                <InputFormItem name={'lastName'} isShow={isShow} schema={usersFields} />
               </Grid>
 
               <Grid item>
-                <InputFormItem name={'phoneNumber'} schema={usersFields} />
+                <InputFormItem name={'phoneNumber'} isShow={isShow} schema={usersFields} />
               </Grid>
 
               <Grid item>
-                <InputFormItem name={'email'} schema={usersFields} />
+                <InputFormItem name={'email'} isShow={isShow} schema={usersFields} />
               </Grid>
 
               <Grid item>
-                <RadioFormItem name={'role'} schema={usersFields} />
+                <RadioFormItem name={'role'} disabled={isShow} schema={usersFields} />
               </Grid>
 
-              <Grid item>
+              {!isShow && <Grid item>
                 <SwitchFormItem name={'disabled'} schema={usersFields} />
-              </Grid>
+              </Grid>}
 
               <Grid item>
                 <ImagesFormItem
@@ -108,8 +112,10 @@ const UsersForm = (props) => {
                     formats: undefined,
                   }}
                   max={undefined}
+                  isShow={isShow}
                 />
               </Grid>
+
 
               <Grid item>
                 <BooksSelectItem
@@ -122,10 +128,13 @@ const UsersForm = (props) => {
               </Grid>
 
               <Grid item>
+
+              {!isShow && <Grid item>
+
                 <InputFormItem name={'password'} schema={usersFields} />
-              </Grid>
+              </Grid>}
             </Grid>
-            <Grid container spacing={3} mt={2}>
+            {!isShow && <Grid container spacing={3} mt={2}>
               <Grid item>
                 <Button
                   color='primary'
@@ -153,7 +162,16 @@ const UsersForm = (props) => {
                   Cancel
                 </Button>
               </Grid>
-            </Grid>
+            </Grid>}
+            {isShow && <Grid item mt={2}>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={() => onCancel()}
+              >
+                Back
+              </Button>
+            </Grid>}
           </form>
         )}
       </Formik>

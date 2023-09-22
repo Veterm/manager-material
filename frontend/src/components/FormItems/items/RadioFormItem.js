@@ -9,12 +9,12 @@ import FormLabel from '@mui/material/FormLabel';
 import { FastField } from 'formik';
 
 const RadioFormItem = (props) => {
-  const { name, schema, hint, errorMessage, required = false } = props;
+  const { name, schema, hint, errorMessage, disabled, required = false } = props;
 
   const { label, options } = schema[name];
 
   return (
-    <FastField name={name}>
+    <FastField name={name} >
       {({ form }) => (
         <>
           <FormControl>
@@ -36,6 +36,7 @@ const RadioFormItem = (props) => {
                   value={option.value}
                   control={<Radio />}
                   label={option.label}
+                  disabled={disabled || undefined}
                 />
               ))}
             </RadioGroup>
@@ -58,6 +59,7 @@ RadioFormItem.propTypes = {
   label: PropTypes.string,
   hint: PropTypes.string,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
 };
 

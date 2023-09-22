@@ -83,6 +83,7 @@ function Layout(props) {
 
           <Route path={'/admin/users'} exact component={UsersTablePage} />
           <Route path={'/admin/users/new'} exact component={UsersFormPage} />
+          <Route path={'/admin/users/:id/show'} exact component={UsersFormPage} />
           <Route
             path={'/admin/users/:id/edit'}
             exact
