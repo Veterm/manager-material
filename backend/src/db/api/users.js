@@ -43,6 +43,10 @@ module.exports = class UsersDBApi {
       { transaction },
     );
 
+    await users.setBooks(data.data.books || [], {
+      transaction,
+    });
+
     await FileDBApi.replaceRelationFiles(
       {
         belongsTo: db.users.getTableName(),
@@ -144,6 +148,10 @@ module.exports = class UsersDBApi {
       { transaction },
     );
 
+    await users.setBooks(data.books || [], {
+      transaction,
+    });
+
     await FileDBApi.replaceRelationFiles(
       {
         belongsTo: db.users.getTableName(),
@@ -198,6 +206,10 @@ module.exports = class UsersDBApi {
       transaction,
     });
 
+    output.books = await users.getBooks({
+      transaction,
+    });
+
     return output;
   }
 
@@ -213,6 +225,21 @@ module.exports = class UsersDBApi {
     const transaction = (options && options.transaction) || undefined;
     let where = {};
     let include = [
+      {
+        model: db.books,
+        as: 'books',
+        through: filter.books
+          ? {
+              where: {
+                [Op.or]: filter.books.split('|').map((item) => {
+                  return { ['Id']: Utils.uuid(item) };
+                }),
+              },
+            }
+          : null,
+        required: filter.books ? true : null,
+      },
+
       {
         model: db.file,
         as: 'avatar',

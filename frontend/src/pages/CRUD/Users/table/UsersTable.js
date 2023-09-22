@@ -1,6 +1,9 @@
 // eslint-disable-next-line
 import * as dataFormat from 'pages/CRUD/Users/table/UsersDataFormatters';
 
+// eslint-disable-next-line
+import * as booksDataFormat from 'pages/CRUD/Books/table/BooksDataFormatters';
+
 import actions from 'actions/users/usersListActions';
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
@@ -270,6 +273,21 @@ const UsersTable = () => {
       },
 
       headerName: 'Avatar',
+    },
+
+    {
+      field: 'books',
+
+      sortable: false,
+      renderCell: (params) =>
+        booksDataFormat.listFormatter(
+          params.row[params.field],
+          history,
+          'books',
+        ),
+      flex: 1,
+
+      headerName: 'Books',
     },
 
     {
