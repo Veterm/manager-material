@@ -25,6 +25,8 @@ import PreparedValues from 'components/FormItems/preparedValues';
 import FormValidations from 'components/FormItems/formValidations';
 import Widget from 'components/Widget';
 
+import BooksSelectItem from 'pages/CRUD/Books/helpers/BooksSelectItem';
+
 const UsersForm = (props) => {
   const {
     isEditing,
@@ -114,7 +116,21 @@ const UsersForm = (props) => {
                 />
               </Grid>
 
+
+              <Grid item>
+                <BooksSelectItem
+                  name={'books'}
+                  schema={usersFields}
+                  showCreate={!modal}
+                  multiple
+                  form={form}
+                />
+              </Grid>
+
+              <Grid item>
+
               {!isShow && <Grid item>
+
                 <InputFormItem name={'password'} schema={usersFields} />
               </Grid>}
             </Grid>

@@ -240,21 +240,21 @@ module.exports = class BooksDBApi {
       where = {
         [Op.or]: [
           { ['id']: Utils.uuid(query) },
-          Utils.ilike('books', 'id', query),
+          Utils.ilike('books', 'title', query),
         ],
       };
     }
 
     const records = await db.books.findAll({
-      attributes: ['id', 'id'],
+      attributes: ['id', 'title'],
       where,
       limit: limit ? Number(limit) : undefined,
-      orderBy: [['id', 'ASC']],
+      orderBy: [['title', 'ASC']],
     });
 
     return records.map((record) => ({
       id: record.id,
-      label: record.id,
+      label: record.title,
     }));
   }
 };

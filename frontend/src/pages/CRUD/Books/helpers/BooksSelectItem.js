@@ -30,7 +30,9 @@ const BooksSelectItem = (props) => {
         return undefined;
       }
 
-      let label = originalValue.label ? originalValue.label : originalValue.id;
+      let label = originalValue.label
+        ? originalValue.label
+        : originalValue.title;
 
       return {
         id: originalValue.id,

@@ -44,6 +44,13 @@ const usersFields = {
 
   provider: { type: 'string', label: 'Provider' },
 
+  books: {
+    type: 'relation_many',
+    label: 'Books',
+
+    options: [{ value: 'value', label: 'value' }],
+  },
+
   password: { type: 'string', label: 'Password' },
 };
 
