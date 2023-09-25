@@ -77,7 +77,6 @@ const BooksForm = (props) => {
               <Grid item>
                 <InputFormItem name={'title'} isShow={isShow} schema={booksFields} autoFocus={!isShow} />
               </Grid>
-              {console.log(form, booksFields)}
               <Grid item>
                 {!isShow ? <UsersSelectItem
                   name={'author'}
