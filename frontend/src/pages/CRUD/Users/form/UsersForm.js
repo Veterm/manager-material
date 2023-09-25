@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
+import actions from 'actions/books/booksListActions';
+import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Loader from 'components/Loader';
@@ -18,6 +20,7 @@ import ImagesFormItem from 'components/FormItems/items/ImagesFormItem';
 // eslint-disable-next-line no-unused-vars
 import FilesFormItem from 'components/FormItems/items/FilesFormItem';
 // eslint-disable-next-line no-unused-vars
+import BooksList from '../../../../components/FormItems/items/BooksList';
 
 import usersFields from 'pages/CRUD/Users/helpers/usersFields';
 import IniValues from 'components/FormItems/iniValues';
@@ -39,11 +42,16 @@ const UsersForm = (props) => {
     onCancel,
     modal,
   } = props;
+  const dispatch = useDispatch();
+  const rows = useSelector((store) => store.books.list.rows);
+
+  useEffect(() => {
+    dispatch(actions.doFetch())
+  }, [])
 
   const iniValues = () => {
     return IniValues(usersFields, record || {});
   };
-
   const formValidations = () => {
     return FormValidations(usersFields, record || {});
   };
@@ -117,25 +125,38 @@ const UsersForm = (props) => {
               </Grid>
 
 
-              <Grid item>
+              {!isShow ? <Grid item>
                 <BooksSelectItem
                   name={'books'}
                   schema={usersFields}
                   showCreate={!modal}
                   multiple
                   form={form}
+                  isShow={isShow}
+                />
+              </Grid> : <><Grid item>
+                <BooksList
+                  tableName='Books'
+                  items={form.values.books}
                 />
               </Grid>
+                <Grid item>
+                  <BooksList
+                    tableName='Books Author'
+                    items={rows.filter(x => x.authorId == form.values.id)}
+                  />
+                </Grid> </>}
 
               <Grid item>
 
-              {!isShow && <Grid item>
+                {!isShow && <Grid item>
 
-                <InputFormItem name={'password'} schema={usersFields} />
-              </Grid>}
+                  <InputFormItem name={'password'} schema={usersFields} />
+                </Grid>}
+              </Grid>
             </Grid>
-            {!isShow && <Grid container spacing={3} mt={2}>
-              <Grid item>
+            <Grid container spacing={3} mt={2}>
+              {!isShow && <><Grid item>
                 <Button
                   color='primary'
                   variant='contained'
@@ -144,34 +165,26 @@ const UsersForm = (props) => {
                   Save
                 </Button>
               </Grid>
-              <Grid item>
-                <Button
-                  color='primary'
-                  variant='outlined'
-                  onClick={form.handleReset}
-                >
-                  Reset
-                </Button>
-              </Grid>
+                <Grid item>
+                  <Button
+                    color='primary'
+                    variant='outlined'
+                    onClick={form.handleReset}
+                  >
+                    Reset
+                  </Button>
+                </Grid></>}
               <Grid item>
                 <Button
                   color='primary'
                   variant='outlined'
                   onClick={() => onCancel()}
                 >
-                  Cancel
+                  {isShow ? 'Back' : 'Cancel'}
                 </Button>
               </Grid>
-            </Grid>}
-            {isShow && <Grid item mt={2}>
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={() => onCancel()}
-              >
-                Back
-              </Button>
-            </Grid>}
+            </Grid>
+
           </form>
         )}
       </Formik>

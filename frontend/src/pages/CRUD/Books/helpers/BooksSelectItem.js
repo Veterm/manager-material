@@ -52,7 +52,7 @@ const BooksSelectItem = (props) => {
     },
   };
 
-  const { form, ...rest } = props;
+  const { form, isShow, ...rest } = props;
 
   return (
     <React.Fragment>

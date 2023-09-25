@@ -24,7 +24,6 @@ const InputFormItem = (props) => {
   } = props;
 
   const { label } = schema[name];
-
   return (
     <FastField name={name}>
       {({ form }) => {
@@ -53,7 +52,7 @@ const InputFormItem = (props) => {
                 autoComplete={autoComplete || undefined}
                 InputProps={{
                   readOnly: isShow,
-                  disableUnderline: true,
+                  disableUnderline: isShow,
                 }}
                 error={FormErrors.validateStatus(form, name, errorMessage)}
                 {...inputProps}

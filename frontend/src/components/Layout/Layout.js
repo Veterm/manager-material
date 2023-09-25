@@ -92,6 +92,7 @@ function Layout(props) {
 
           <Route path={'/admin/books'} exact component={BooksTablePage} />
           <Route path={'/admin/books/new'} exact component={BooksFormPage} />
+          <Route path={'/admin/books/:id/show'} exact component={BooksFormPage} />
           <Route
             path={'/admin/books/:id/edit'}
             exact

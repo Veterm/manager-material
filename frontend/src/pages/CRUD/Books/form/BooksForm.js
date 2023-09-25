@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Loader from 'components/Loader';
+import Typography from '@mui/material/Typography';
 // eslint-disable-next-line no-unused-vars
 import InputFormItem from 'components/FormItems/items/InputFormItem';
 // eslint-disable-next-line no-unused-vars
@@ -31,6 +32,7 @@ const BooksForm = (props) => {
   const {
     isEditing,
     isProfile,
+    isShow,
     findLoading,
     saveLoading,
     record,
@@ -55,6 +57,8 @@ const BooksForm = (props) => {
   const title = () => {
     if (isProfile) {
       return 'Edit My Profile';
+    } else if (isShow) {
+      return 'View book';
     }
 
     return isEditing ? 'Edit Books' : 'Add Books';
@@ -71,20 +75,23 @@ const BooksForm = (props) => {
           <form onSubmit={form.handleSubmit}>
             <Grid container spacing={3} direction='column'>
               <Grid item>
-                <InputFormItem name={'title'} schema={booksFields} autoFocus />
+                <InputFormItem name={'title'} isShow={isShow} schema={booksFields} autoFocus={!isShow} />
               </Grid>
-
+              {console.log(form, booksFields)}
               <Grid item>
-                <UsersSelectItem
+                {!isShow ? <UsersSelectItem
                   name={'author'}
                   schema={booksFields}
                   showCreate={!modal}
                   form={form}
-                />
+                  isShow={isShow}
+                  isBookShowPage={true}
+                /> : <> <Typography variant="caption" style={{ marginBottom: 10, }}>Author</Typography>
+                  <Typography >{form.values.author.firstName}</Typography> </>}
               </Grid>
             </Grid>
             <Grid container spacing={3} mt={2}>
-              <Grid item>
+              {!isShow && <><Grid item>
                 <Button
                   color='primary'
                   variant='contained'
@@ -93,22 +100,22 @@ const BooksForm = (props) => {
                   Save
                 </Button>
               </Grid>
-              <Grid item>
-                <Button
-                  color='primary'
-                  variant='outlined'
-                  onClick={form.handleReset}
-                >
-                  Reset
-                </Button>
-              </Grid>
+                <Grid item>
+                  <Button
+                    color='primary'
+                    variant='outlined'
+                    onClick={form.handleReset}
+                  >
+                    Reset
+                  </Button>
+                </Grid></>}
               <Grid item>
                 <Button
                   color='primary'
                   variant='outlined'
                   onClick={() => onCancel()}
                 >
-                  Cancel
+                  {isShow ? 'Back' : 'Cancel'}
                 </Button>
               </Grid>
             </Grid>

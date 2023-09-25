@@ -14,6 +14,13 @@ const BooksFormPage = (props) => {
     return !!match.params.id;
   };
 
+  const isShow = () => {
+    if (match.url.includes('/show')) {
+      return true;
+    }
+    return false;
+  }
+
   const isProfile = () => {
     return match.url === '/app/profile';
   };
@@ -51,6 +58,7 @@ const BooksFormPage = (props) => {
           record={isEditing() || isProfile() ? record : {}}
           isEditing={isEditing()}
           isProfile={isProfile()}
+          isShow={isShow()}
           onSubmit={doSubmit}
           onCancel={() => dispatch(push('/admin/books'))}
         />

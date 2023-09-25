@@ -3,11 +3,11 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 async function list(filter) {
-  const response = await axios.get(
+  const response = await axios.get(filter ?
     `/books?page=${filter.page}&limit=${filter.limit}
 
     &books=${filter.books ? filter.books : ''}
-    &${queryString.stringify(filter.orderBy)}${filter.request}`,
+    &${queryString.stringify(filter.orderBy)}${filter.request}` : `/books`,
   );
   return response.data;
 }
@@ -41,30 +41,30 @@ const actions = {
 
   doFetch:
     (filter, keepPagination = false) =>
-    async (dispatch, getState) => {
-      try {
-        dispatch({
-          type: 'BOOKS_LIST_FETCH_STARTED',
-          payload: { filter, keepPagination },
-        });
+      async (dispatch, getState) => {
+        try {
+          dispatch({
+            type: 'BOOKS_LIST_FETCH_STARTED',
+            payload: { filter, keepPagination },
+          });
 
-        const response = await list(filter);
+          const response = await list(filter);
 
-        dispatch({
-          type: 'BOOKS_LIST_FETCH_SUCCESS',
-          payload: {
-            rows: response.rows,
-            count: response.count,
-          },
-        });
-      } catch (error) {
-        Errors.handle(error);
+          dispatch({
+            type: 'BOOKS_LIST_FETCH_SUCCESS',
+            payload: {
+              rows: response.rows,
+              count: response.count,
+            },
+          });
+        } catch (error) {
+          Errors.handle(error);
 
-        dispatch({
-          type: 'BOOKS_LIST_FETCH_ERROR',
-        });
-      }
-    },
+          dispatch({
+            type: 'BOOKS_LIST_FETCH_ERROR',
+          });
+        }
+      },
 
   doDelete: (filter, id) => async (dispatch) => {
     try {
