@@ -20,7 +20,7 @@ import ImagesFormItem from 'components/FormItems/items/ImagesFormItem';
 // eslint-disable-next-line no-unused-vars
 import FilesFormItem from 'components/FormItems/items/FilesFormItem';
 // eslint-disable-next-line no-unused-vars
-import BooksList from '../../../../components/FormItems/items/BooksList';
+import BooksList from 'components/FormItems/items/BooksList';
 
 import usersFields from 'pages/CRUD/Users/helpers/usersFields';
 import IniValues from 'components/FormItems/iniValues';
